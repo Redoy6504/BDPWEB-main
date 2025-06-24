@@ -133,3 +133,47 @@
 
 
 </div>
+<!-- reminder -->
+<div class="row g-0">
+  <div class="col-12">
+    <div class="reminder-section border p-4 rounded mt-3 bg-light">
+      <h4 class="mb-3">⏰ Interval Reminder</h4>
+
+      <!-- Input for Minutes -->
+      <div class="mb-3 d-flex align-items-center">
+        <label class="me-2 mb-0">Set Interval (in minutes):</label>
+        <input
+          type="number"
+          class="form-control w-auto me-3"
+          [(ngModel)]="intervalMinutes"
+          min="1"
+          placeholder="Enter minutes"
+        />
+      </div>
+
+      <!-- Start & Stop Buttons -->
+      <div class="mb-3">
+        <button class="btn btn-success me-2" (click)="startIntervalReminder()">Start Reminder</button>
+        <button class="btn btn-danger" (click)="stopIntervalReminder()">Stop Reminder</button>
+      </div>
+
+      <!-- Active Status -->
+      <div *ngIf="intervalId" class="alert alert-success p-2">
+        ✅ Reminder is active every {{ intervalMinutes }} minute(s).
+      </div>
+      <div *ngIf="!intervalId && reminderLogs.length > 0" class="alert alert-warning p-2">
+        ⛔ Reminder is stopped.
+      </div>
+    </div>
+  </div>
+
+  <!-- Reminder Logs -->
+  <div class="col-12 mt-4" *ngIf="reminderLogs.length > 0">
+    <h5>📝 Reminder Logs ({{ reminderCount }})</h5>
+    <ul class="list-group">
+      <li *ngFor="let log of reminderLogs" class="list-group-item">
+        {{ log }}
+      </li>
+    </ul>
+  </div>
+</div>

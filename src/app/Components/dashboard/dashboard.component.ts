@@ -47,6 +47,17 @@ export class DashboardComponent implements OnInit {
   public oMerchantInfo = new MerchantInfo();
 
   trackByFn: TrackByFunction<any> | any;
+
+  // ====== REMINDER PROPERTIES ADDED HERE ======
+  intervalId: any = null;
+  timeoutId: any = null;
+
+  intervalMinutes: number = 0;       // for interval reminder input (in minutes)
+  fixedTime: string = '14:00';       // for fixed time reminder input (format HH:mm)
+  reminderLogs: string[] = [];
+  reminderCount: number = 0; 
+  
+  // =============================================
   constructor(public authService: AuthService,
     private toast: ToastrService,
     private http: HttpHelperService,
@@ -180,6 +191,20 @@ export class DashboardComponent implements OnInit {
     let currentUser = CommonHelper.GetUser();
     var daata = this.authService.isTokenExpired(currentUser?.JwtToken);
     // this.GetAllCategories();
+   // reminder
+    CommonHelper.GetUser();
+
+  const savedMinutes = localStorage.getItem('intervalReminderMinutes');
+  if (savedMinutes) {
+    this.intervalMinutes = +savedMinutes;
+    this.toast.info(`Resuming reminder of every ${this.intervalMinutes} minute(s).`);
+
+    this.intervalId = setInterval(() => {
+      const time = new Date().toLocaleTimeString();
+      this.reminderLogs.push(`Reminder triggered at ${time}`);
+      this.cdr.detectChanges();
+    }, this.intervalMinutes * 60 * 1000);
+  }
   }
 
 
@@ -319,6 +344,37 @@ export class DashboardComponent implements OnInit {
     );
 
   }
+  //  // ========== REMINDER METHODS ===========
+ startIntervalReminder(): void {
+  if (this.intervalId) clearInterval(this.intervalId);
+
+  if (this.intervalMinutes > 0) {
+    // Save interval state to localStorage
+    localStorage.setItem('intervalReminderMinutes', this.intervalMinutes.toString());
+    localStorage.setItem('intervalReminderStartTime', new Date().toISOString());
+
+    this.toast.success(`Reminder set for every ${this.intervalMinutes} minute(s).`);
+    this.intervalId = setInterval(() => {
+      const time = new Date().toLocaleTimeString();
+      this.reminderLogs.push(`Reminder triggered at ${time}`);
+      this.toast.info(`Reminder triggered at ${time}`);
+      this.cdr.detectChanges();
+    }, this.intervalMinutes * 60 * 1000);
+  }
+}
+
+
+ stopIntervalReminder(): void {
+   if (this.intervalId) {
+     clearInterval(this.intervalId);
+     this.intervalId = null;
+
+     localStorage.removeItem('intervalReminderMinutes');
+     localStorage.removeItem('intervalReminderStartTime');
+
+     this.toast.info('Interval reminder stopped.');
+   }
+ }
 
 }
 
