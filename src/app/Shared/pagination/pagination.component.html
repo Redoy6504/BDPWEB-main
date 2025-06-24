@@ -1,0 +1,33 @@
+<div class="row g-0" *ngIf="totalPages > 0">
+    <div class="col-md-6 mt-1">
+        <div class="input-group mb-3">
+            <span class="input-group-text">Page {{currentPage}} of {{totalPages}}</span>
+        </div>
+    </div>
+
+    <div class="col-md-6 mt-1 text-end">
+        <nav aria-label="Page navigation example" style="display: inline-flex">
+            <ul class="pagination">
+                <li class="page-item me-1">
+                    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1"
+                        class="page-link">Previous</button>
+                </li>
+
+                <ng-container *ngFor="let page of pages">
+                    <li *ngIf="page !== '...'" class="page-item" [class.active]="page === currentPage">
+                        <button class="page-link" (click)="changePage(page)">{{ page }}</button>
+                    </li>
+                    <li *ngIf="page === '...'" class="page-item me-1 disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                </ng-container>
+
+                <li class="page-item ms-1">
+                    <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages"
+                        class="page-link">Next</button>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</div>

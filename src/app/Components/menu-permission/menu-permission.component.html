@@ -1,0 +1,209 @@
+<div class="row g-0">
+
+    <div class="col-2 px-1">
+        <div class="mb-2">
+
+            <select class="form-select" [(ngModel)]="oMenuPermissionFilterRequestDto.companyId"
+                (change)="onFiltercompanyChange()" name="companyId" aria-label="Default select example">
+                <option value="0">-- select company name --</option>
+                <ng-template ngFor let-item [ngForOf]="CompanyList" let-i="index" [ngForTrackBy]="trackByCompany">
+                    <option value="{{item.id}}">{{item.name}}</option>
+                </ng-template>
+            </select>
+        </div>
+    </div>
+    <div class="col-2 px-1">
+        <div class="mb-2">
+            <select class="form-select" [(ngModel)]="oMenuPermissionFilterRequestDto.userID" name="userID"
+                name="companyId" aria-label="Default select example">
+                <option value="">-- select user name --</option>
+                <option *ngFor="let item of userList; trackBy: trackByUser" [value]="item.id">
+                    {{ item.fullName }}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="col-2 px-1">
+        <div class="mb-2">
+            <select class="form-select" [(ngModel)]="oMenuPermissionFilterRequestDto.isActive" Name="isActive"
+                aria-label="Default select example">
+                <option value="true">Active</option>
+                <option value="false">Inactive</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-1 px-1">
+        <div class="mb-2">
+            <button class="btn btn-success" (click)="Filter()">Search</button>
+        </div>
+    </div>
+    <div class="col text-end">
+        <button class="btn btn-success mx-1" (click)="add()"> <i class="bi bi-plus"></i> Add</button>
+        <button class="btn btn-success mx-1" (click)="edit()"><i class="bi bi-pencil-square"></i> Edit</button>
+        <button class="btn btn-danger mx-1" (click)="delete()"><i class="bi bi-trash3"></i> Delete</button>
+    </div>
+
+    <div class="col-md-12">
+        <ag-grid-angular class="ag-theme-alpine" style="height: 76vh;width: 100%;" [columnDefs]="colDefsTransection"
+            [rowData]="rowData" [rowSelection]="'single'" (gridReady)="onGridReadyTransection($event)"
+            [defaultColDef]="DeafultCol">
+        </ag-grid-angular>
+    </div>
+
+
+
+    <!-- <div class="col-md-6 mt-1">
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Page {{pageIndex}} of {{totalPages}}</span>
+        </div>
+    </div>
+
+    <div class="col-md-6 mt-1 text-end">
+        <nav aria-label="Page navigation example" style="display: inline-flex" *ngIf="totalPages > 0">
+            <ul class="pagination">
+                <li class="page-item me-1">
+                    <button [disabled]="!hasPreviousPage" class="page-link" (click)="onPreviousPage()">Previous</button>
+                  </li>
+              
+                <ng-container *ngFor="let item of totalPageNumbers">
+                    <li class="page-item" [class.active]="item === pageIndex">
+                      <button class="page-link" (click)="onPage(item)">{{ item }}</button>
+                    </li>
+                </ng-container>
+                <li class="page-item ms-1">
+                    <button [disabled]="!hasNextPage" class="page-link" (click)="onNextPage()">Next</button>
+                  </li>
+            </ul>
+        </nav>
+    </div> -->
+</div>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" hidden id="openCommonModel" data-bs-toggle="modal"
+    data-bs-target="#exampleModal">
+    Launch demo modal
+</button>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Menu Permission
+                    @if (MenuPermissionId==0){Create} @if (MenuPermissionId>0){Update}
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" id="closeCommonModel"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-0">
+
+                    <div class="col-4 px-1">
+                        <div class="mb-2">
+                            <label for="companyId" class="form-label">Company Name</label>
+                            <select class="form-select" type="Number" (change)="companyChange()"
+                                [(ngModel)]="oMenuPermissionRequestDto.companyId" name="companyId"
+                                aria-label="Default select example">
+                                <option value="0">-- select company name --</option>
+                                <option *ngFor="let item of CompanyList; trackBy: trackByCompany" [value]="item.id">
+                                    {{ item.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-4 px-1">
+                        <div class="mb-2">
+                            <label for="userID" class="form-label">User Name</label>
+                            <select class="form-select" [(ngModel)]="oMenuPermissionRequestDto.userID" name="userID"
+                                aria-label="Default select example">
+                                <option value="">-- select user name --</option>
+                                <option *ngFor="let item of userList; trackBy: trackByUser" [value]="item.id">
+                                    {{ item.fullName }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4 px-1">
+                        <div class="mb-2">
+                            <label for="menuId" class="form-label">Menu Name</label>
+                            <select class="form-select" type="Number" [(ngModel)]="oMenuPermissionRequestDto.menuId"
+                                name="menuId" aria-label="Default select example">
+                                <option *ngFor="let item of manuList; trackBy: trackByMenu" [value]="item.id">
+                                    {{ item.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4 px-1">
+                        <div class="mb-2">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" [(ngModel)]="oMenuPermissionRequestDto.name"
+                                Name="name" placeholder="Please enter Name">
+                        </div>
+                    </div>
+
+
+                    <div class="col-4 px-1">
+                        <div class="mb-2">
+                            <label for="isActive" class="form-label">Status</label>
+                            <select class="form-select" [(ngModel)]="oMenuPermissionRequestDto.isActive" Name="isActive"
+                                aria-label="Default select example">
+                                <option value="true">Active</option>
+                                <option value="false">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <label for="remarks" class="form-label">Remarks</label>
+                        <textarea class="form-control" Name="remarks" [(ngModel)]="oMenuPermissionRequestDto.remarks"
+                            id="remarks" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                @if (MenuPermissionId==0){
+                <button type="button" class="btn btn-primary" (click)="InsertMenuPermission()">Save</button>
+                }
+                @if (MenuPermissionId>0){
+                <button type="button" class="btn btn-primary" (click)="UpdateMenuPermission()">Update</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<button type="button" class="btn btn-primary" hidden data-bs-toggle="modal" id="openCommonDelete"
+    data-bs-target="#staticCommonBackdrop">
+    Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticCommonBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">MenuPermission Delete</h1>
+                <button type="button" class="btn-close" id="closeCommonDelete" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-0">
+                    <div class="col-md-6 h2 text-center">
+                        are you confirm delete?
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Close </button>
+                <button type="button" class="btn btn-primary" (click)="DeleteMenuPermission()"> Confirm </button>
+            </div>
+        </div>
+    </div>
+</div>

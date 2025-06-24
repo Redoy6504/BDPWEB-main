@@ -1,0 +1,173 @@
+<div class="row g-0">
+
+    <div class="col-2 px-1">
+        <div class="mb-2">
+            <input type="text" class="form-control" autocomplete="off" [(ngModel)]="oAspNetUsersFilterRequestDto.name"
+                name="name" placeholder="enter user name ...">
+        </div>
+    </div>
+
+    <div class="col-2 px-1">
+        <div class="mb-2">
+            <select class="form-select" [(ngModel)]="oAspNetUsersFilterRequestDto.companyId" name="companyId"
+                aria-label="Default select example">
+                <option value="0">-- select company --</option>
+                <option *ngFor="let item of CompanyList; trackBy: trackByCompany" [value]="item.id">
+                    {{ item.name }}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="col-2 px-1">
+        <div class="mb-2">
+            <select class="form-select" [(ngModel)]="oAspNetUsersFilterRequestDto.isActive" name="isActive"
+                aria-label="Default select example">
+                <option value="true">Active</option>
+                <option value="false">Inactive</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-2 px-1">
+        <div class="mb-2">
+            <button class="btn btn-success" (click)="Filter()">Search</button>
+        </div>
+    </div>
+    <div class="col text-end">
+        <button class="btn btn-success mx-1" (click)="add()"> <i class="bi bi-plus"></i> Add</button>
+        <button class="btn btn-success mx-1" (click)="edit()"><i class="bi bi-pencil-square"></i> Edit</button>
+        <button class="btn btn-danger mx-1" (click)="delete()"><i class="bi bi-trash3"></i> Delete</button>
+    </div>
+
+
+    <div class="col-md-12">
+        <ag-grid-angular class="ag-theme-alpine" style="height: 70vh;width: 100%;" [columnDefs]="colDefsTransection"
+            [rowData]="rowData" [rowSelection]="'single'" (gridReady)="onGridReadyTransection($event)"
+            [defaultColDef]="DeafultCol">
+        </ag-grid-angular>
+    </div>
+
+
+    <app-pagination [pageSize]="10" [currentPage]="pageIndex" [totalItems]="totalRecords" (pageChange)="PageChange($event)" ></app-pagination>
+</div>
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" hidden id="openCommonModel" data-bs-toggle="modal"
+    data-bs-target="#exampleModal">
+    Launch demo modal
+</button>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">User
+                    @if (aspnetusersId==""){Create} @if (aspnetusersId!=""){Update}
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" id="closeCommonModel"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-0">
+
+                    <div class="col-12 px-1">
+                        <div class="mb-2">
+                            <label for="isActive" class="form-label">Role Type</label>
+                            <select class="form-select" [(ngModel)]="oAspNetUsersRequestDto.roleId" name="isActive"
+                                aria-label="Default select example">
+                                <option value="">-- select role --</option>
+                                <ng-template ngFor let-item [ngForOf]="roleList" let-i="index"
+                                    [ngForTrackBy]="trackByFn">
+                                    <option value="{{item.id}}">{{item.name}}</option>
+                                </ng-template>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 px-1">
+                        <div class="mb-2">
+                            <label for="fullName" class="form-label">full Name</label>
+                            <input type="text" class="form-control" [(ngModel)]="oAspNetUsersRequestDto.fullName"
+                                name="fullName" placeholder="Please enter full name">
+                        </div>
+                    </div>
+                    <div class="col-12 px-1">
+                        <div class="mb-2">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="text" class="form-control" [(ngModel)]="oAspNetUsersRequestDto.email"
+                                name="email" placeholder="Please enter email">
+                        </div>
+                    </div>
+                    <div class="col-12 px-1">
+                        <div class="mb-2">
+                            <label for="phoneNumber" class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" [(ngModel)]="oAspNetUsersRequestDto.phoneNumber"
+                                name="phoneNumber" placeholder="Please enter phone number">
+                        </div>
+                    </div>
+                    <div class="col-12 px-1">
+                        <div class="mb-2">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="text" class="form-control" [(ngModel)]="oAspNetUsersRequestDto.password"
+                                name="password" placeholder="Please enter phone number">
+                        </div>
+                    </div>
+                    <div class="col-12 px-1">
+                        <div class="mb-2">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control"
+                                [(ngModel)]="oAspNetUsersRequestDto.confirmPassword" name="confirmPassword"
+                                placeholder="Please enter phone number">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                @if (aspnetusersId==""){
+                <button type="button" class="btn btn-primary" (click)="InsertAspNetUsers()">Save</button>
+                }
+                @if (aspnetusersId!=""){
+                <button type="button" class="btn btn-primary" (click)="UpdateAspNetUsers()">Update</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<button type="button" class="btn btn-primary" hidden data-bs-toggle="modal" id="openCommonDelete"
+    data-bs-target="#staticCommonBackdrop">
+    Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticCommonBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">User Delete</h1>
+                <button type="button" class="btn-close" id="closeCommonDelete" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-0">
+                    <div class="col-md-6 h2 text-center">
+                        are you confirm delete?
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Close </button>
+                <button type="button" class="btn btn-primary" (click)="DeleteAspNetUsers()"> Confirm </button>
+            </div>
+        </div>
+    </div>
+</div>

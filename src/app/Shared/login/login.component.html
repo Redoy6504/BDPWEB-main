@@ -1,0 +1,66 @@
+<div class="row g-0">
+    <div class="col" style="background-color: rgb(255 255 255);" [style.height]="bodyHeight+ 'px !important'">
+        <img class=" w-100" style="max-height: -webkit-fill-available;" src="login.png">
+    </div>
+    <div class="col-5 theme-bg" [style.height]="bodyHeight+ 'px !important'">
+
+        <div class="row g-0 justify-content-center align-items-center">
+            <div class="col-8  pt-3 h-100">
+                <div class="card mt-5 rounded-3 overflow-hidden">
+                    <div class="card-body p-5 theme-bg-smoke">
+                        <div class="row g-0">
+                            <div class="col-12 text-center">
+                                <img src="flat-logo.png" />
+                            </div>
+                            <div class="col-md-12 mb-3 text-center">
+                                Sign to your account
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-2">
+                                    <label for="UserName" class="form-label">User Name/Email </label>
+                                    <input type="text" [(ngModel)]="oLoginRequestDto.UserName" name="UserName"
+                                        class="form-control" id="UserName" placeholder="">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="mb-2">
+                                    <label for="Password" class="form-label">Password</label>
+                                    <input type="password" [(ngModel)]="oLoginRequestDto.Password" name="Password"
+                                        class="form-control" id="Password">
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="remember">
+                                    <label class="form-check-label" for="remember">
+                                        Remember
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="">
+                                    <label for="exampleFormControlInput1" class="form-label">Forget Password?</label>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="mt-3">
+                                    <button type="button" (click)="Login()"
+                                        class="btn theme-bg text-white fw-bold text-center w-100">Log in</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

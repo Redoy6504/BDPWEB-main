@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+* {
+    font-size: small;
+    font-weight: 500;
+}
+
+.theme-bg {
+    background-color: #006A4E !important;
+}
+
+.theme-bg-smoke {
+    background-color: #F6F9FE !important;
+}
+
+.theme-text {
+    color: #006A4E;
+}
+
+.theme-bg1 {
+    background-color: #FAFBFB;
+}
+
+.chart-container {
+    display: flex;
+    width: 100%;
+    height: 400px;
+    /* Set the height for the chart */
+}
+
+ag-charts {
+    flex-grow: 1;
+    width: 100%;
+}
+
+.nav-link.active {
+    background-color: #006A4E !important;
+    color: white !important;
+}

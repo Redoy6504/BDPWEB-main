@@ -1,0 +1,146 @@
+<div class="row g-0">
+
+    <div class="col-2 px-1">
+        <div class="mb-2">
+            <input type="text" class="form-control" [(ngModel)]="oCategoryFilterRequestDto.name" name="name"
+                placeholder="type here ...">
+        </div>
+    </div>
+    <div class="col-2 px-1">
+        <div class="mb-2">
+            <select class="form-select" [(ngModel)]="oCategoryFilterRequestDto.isActive" name="isActive"
+                aria-label="Default select example">
+                <option value="true">Active</option>
+                <option value="false">Inactive</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-2 px-1">
+        <div class="mb-2">
+            <button class="btn btn-success" (click)="Filter()">Search</button>
+        </div>
+    </div>
+    <div class="col text-end">
+        <button class="btn btn-success mx-1" (click)="add()"> <i class="bi bi-plus"></i> Add</button>
+        <button class="btn btn-success mx-1" (click)="edit()"><i class="bi bi-pencil-square"></i> Edit</button>
+        <button class="btn btn-danger mx-1" (click)="delete()"><i class="bi bi-trash3"></i> Delete</button>
+    </div>
+
+
+    <div class="col-md-12">
+        <ag-grid-angular class="ag-theme-alpine" style="height: 70vh;width: 100%;" [columnDefs]="colDefsTransection"
+            [rowData]="rowData" [rowSelection]="'single'" (gridReady)="onGridReadyTransection($event)"
+            [defaultColDef]="DeafultCol">
+        </ag-grid-angular>
+    </div>
+
+
+    <app-pagination [pageSize]="20" [currentPage]="pageIndex" [totalItems]="totalRecords" (pageChange)="PageChange($event)" ></app-pagination>
+</div>
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" hidden id="openCommonModel" data-bs-toggle="modal"
+    data-bs-target="#exampleModal">
+    Launch demo modal
+</button>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Category
+                        @if (categoryId==0){Create} @if (categoryId>0){Update}
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" id="closeCommonModel"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-0">
+
+                        <div class="col-4 px-1">
+                            <div class="mb-2">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" [(ngModel)]="oCategoryRequestDto.name"
+                                    name="name" placeholder="Please enter name">
+                            </div>
+                        </div>
+
+                        <div class="col-4 px-1">
+                            <div class="mb-2">
+                                <label for="isActive" class="form-label">Status</label>
+                                <select class="form-select" [(ngModel)]="oCategoryRequestDto.isActive" name="isActive"
+                                    aria-label="Default select example">
+                                    <option value="true">Active</option>
+                                    <option value="false">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4 px-1 mb-2">
+                            <label for="remarks" class="form-label">Remarks</label>
+                            <textarea class="form-control" name="remarks" [(ngModel)]="oCategoryRequestDto.remarks"
+                                id="remarks" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    @if (categoryId==0){
+                    <button type="button" class="btn btn-primary" (click)="InsertCategory()">Save</button>
+                    }
+                    @if (categoryId>0){
+                    <button type="button" class="btn btn-primary" (click)="UpdateCategory()">Update</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<button type="button" class="btn btn-primary" hidden data-bs-toggle="modal" id="openCommonDelete"
+    data-bs-target="#staticCommonBackdrop">
+    Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticCommonBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="row g-0">
+                    <div class="col-12 mt-4" style="text-align: center">
+                        <img src="Delete2.png" style="width: 60px; height: 60px; " />
+                    </div>
+                    <div class="col-md-12 h2 text-center">
+                        Are you sure?
+
+                        <h5 style="margin-top: 5px; opacity: 80%;">Do you really want to delete these records?this
+                            process cannot be undone.</h5>
+                    </div>
+                </div>
+
+                <div class="row my-2 justify-content-evenly">
+                    <div class="col-5 text-end">
+                        <button type="button" class="btn btn-secondary btn-lg w-100" id="closeCommonDelete" data-bs-dismiss="modal"> Close
+                        </button>
+                    </div>
+                    <div class="col-5">
+                        <button type="button" class="btn btn-danger btn-lg w-100" (click)="DeleteCategory()">
+                            Delete </button>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="modal-footer text-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Close </button>
+                <button type="button" class="btn btn-primary" (click)="DeleteCategory()"> Confirm </button>
+            </div> -->
+        </div>
+    </div>
+</div>

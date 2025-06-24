@@ -1,0 +1,32 @@
+
+nav.navbar {
+    width: 100%;
+    // min-height: 100vh;
+    background-color: #e8f5e9;
+  }
+  
+  .navbar-nav .nav-link {
+    color: #343a40;
+    font-weight: bold;
+    background-color: #d8f1e7;
+    margin: 3px 4px;
+    border-radius: 3px;
+  }
+  
+  .navbar-nav .nav-link:hover {
+    background-color: #006A4E;
+    color: white;
+  }
+  
+  .navbar-nav .collapse {
+    background-color: #f1f8e9;
+  }
+
+  .nav-link.active {
+    background-color: #2e7d32;
+    color: #343a40 ;
+  }
+  
+  .nav-link.active i {
+    color: #343a40 ;
+  }

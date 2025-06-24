@@ -1,0 +1,28 @@
+<div class="row g-0">
+  @if (authService.isLogin()) {
+  <div class="col-2 border" style="background-color: rgb(255 255 255);" [style.height.px]="leftSideHeight">
+    <app-left-side-bar></app-left-side-bar>
+  </div>
+  }
+  <div class="col">
+    <div class="row g-0">
+
+      @if (authService.isLogin()) {
+      <div class="col-12" id="navbarHeaderId">
+        <app-header></app-header>
+      </div>
+      }
+      <div class="col-12 theme-bg1 p-1" [style.height.px]="bodyHeight" style=" overflow-y: auto;">
+        <!-- <router-outlet /> -->
+         <router-outlet></router-outlet>
+         @if (authService.isLogin()) {
+          <div class="col-12" >
+            <app-footer></app-footer>
+          </div>
+          }
+      </div>
+     <div class="" id="footerId"></div>
+    </div>
+  </div>
+
+</div>

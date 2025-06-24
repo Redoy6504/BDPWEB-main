@@ -1,0 +1,48 @@
+<div class="row g-0">
+    <div class="col-2 px-1">
+        <div class="mb-2">
+            <input type="date" class="form-control" [(ngModel)]="fromDate" name="fromDate">
+        </div>
+    </div>
+    <div class="col-2 px-1">
+        <div class="mb-2">
+            <input type="date" class="form-control" [(ngModel)]="toDate" name="toDate">
+        </div>
+    </div>
+    <div class="col-2 px-1">
+        <div class="mb-2">
+            <input type="text" class="form-control" [(ngModel)]="oTouristTripFilterDto.TouristPlace" name="Name"
+                placeholder="Search by  place name...">
+        </div>
+    </div>
+    
+    
+    <div class="col-2 px-1">
+        <div class="mb-2">
+            <select class="form-select" [(ngModel)]="oTouristTripFilterDto.IsActive" name="IsActive"
+                aria-label="Default select example">
+                <option value="true">Active</option>
+                <option value="false">Inactive</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-2 px-1">
+        <div class="mb-2">
+            <button class="btn btn-success" (click)="Filter()">Search</button>
+        </div>
+    </div>
+
+
+    <div class="col-md-12">
+        <ag-grid-angular class="ag-theme-alpine" style="height: 70vh;width: 100%;" [columnDefs]="colDefsTransection"
+            [rowData]="rowData" [rowSelection]="'single'" (gridReady)="onGridReadyTransection($event)"
+            [defaultColDef]="DeafultCol">
+        </ag-grid-angular>
+    </div>
+
+    <app-pagination [pageSize]="20" [currentPage]="pageIndex" [totalItems]="totalRecords"
+        (pageChange)="PageChange($event)"></app-pagination>
+</div>
+
+

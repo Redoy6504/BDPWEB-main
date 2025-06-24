@@ -1,0 +1,75 @@
+@if (this.Status=="Success") {
+
+<div class="background-color-animation">
+  <div class="cards-container ">
+    <div class=" card card-two mb-0" id="card">
+      <header class="mb-0">
+        <div class="avatar mb-0">
+          <img src="logo.png" alt="" />
+        </div>
+      </header>
+      <div class="message-box _success">
+        <i class="bi bi-check-circle-fill"></i>
+        <h2>Your payment was successfull</h2>
+        <p>Thank you for your payment. We will <br> be in contact with more details shortly.</p>
+        <strong> Your Merchant Transaction Id</strong>
+        <p>{{MerchantTransactionId}}</p>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+}
+@if (this.Status=="Cancel") {
+<div class="background-color-animation">
+  <div class="cards-container ">
+    <div class=" card card-two mb-0" id="card">
+      <header class="mb-0">
+        <div class="avatar mb-0">
+
+          <img src="logo.png" alt="" />
+
+        </div>
+      </header>
+      <div class="message-box _success _failed">
+        <i class="bi bi-x-circle-fill"></i>
+        <h2>Your Payment Canceled</h2>
+        <p>Please Try again</p>
+        <strong> Your Merchant Transaction Id</strong>
+        <p>{{MerchantTransactionId}}</p>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+}
+@if (this.Status=="Fail") {
+
+<div class="background-color-animation">
+  <div class="cards-container ">
+    <div class=" card card-two mb-0" id="card">
+      <header class="mb-0">
+        <div class="avatar mb-0">
+
+          <img src="logo.png" alt="" />
+
+        </div>
+      </header>
+      <div class="message-box _success _failed">
+        <i class="bi bi-x-circle-fill"></i>
+        <h2>Your payment failed</h2>
+        <p>Try again later</p>
+        <strong> Your Merchant Transaction Id</strong>
+        <p>{{MerchantTransactionId}}</p>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+}

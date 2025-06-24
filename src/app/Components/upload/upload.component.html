@@ -1,0 +1,13 @@
+<div class="col-4 px-1">
+    <label for="uploadFile" class="form-label">File Upload</label>
+    <input type="file" class="form-control" id="uploadFile" (change)="onFileChange($event)"
+        placeholder="select uploadFile Font">
+</div>
+
+
+<div *ngIf="oFileResponseDto">
+    <h3>File Info: {{ oFileResponseDto.Id }}</h3>
+    <p><strong>Name:</strong> {{ oFileResponseDto.FileName }}</p>
+    <p><strong>Size:</strong> {{ oFileResponseDto.FileSize }} bytes</p>
+    <p><strong>Preview URL:</strong> {{ oFileResponseDto.FileData }}</p>
+</div>
